@@ -15,10 +15,11 @@ public class BFSGUI extends JPanel {
     List<List<Integer>> k = new ArrayList<>();
 
     public BFSGUI(int [][] matrix, List<Integer> start, List<Integer> end){
+        this.setBounds(0,50,810,720);
         this.matrix = matrix;
         this.start = start;
         this.end = end;
-        visited = new boolean[30][30];
+        visited = new boolean[50][50];
         l =  new LinkedList<>();
 
         l.add(start);
@@ -30,7 +31,7 @@ public class BFSGUI extends JPanel {
         SwingWorker<Void, Void> Worker = new SwingWorker<Void, Void>() {
             @Override
             protected Void doInBackground() throws Exception {
-                if (k.contains(sol)) {
+                if (k.contains(sol) || l.contains(sol)) {
                     return null;
                 }
 //                if(getNeighbors(arr, l.peek().get(0), l.peek().get(1)).size() == 0){
@@ -45,7 +46,7 @@ public class BFSGUI extends JPanel {
                 arr[node.get(0)][node.get(1)] = 1;
                 visited[node.get(0)][node.get(1)] = true;
                 try {
-                    Thread.sleep(100);
+                    Thread.sleep(2);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
@@ -93,29 +94,32 @@ public class BFSGUI extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.setColor(Color.DARK_GRAY);
-        g.fillRect(0, 50, 400, 500);
+        g.fillRect(0, 0, 810, 720);
 
 
-        for (int i = 0; i < 20; i++) {
-            for (int j = 0; j < 20; j++) {
+        for (int i = 0; i < 50; i++) {
+            for (int j = 0; j < 50; j++) {
                 if(start.get(0) == i && start.get(1) == j){
                     g.setColor(Color.BLUE);
                 }
+
+                else if(end.get(0) == i && end.get(1) == j && (!l.contains(end))){
+                    g.setColor(Color.BLUE);
+                }
+                else if(end.get(0) == i && end.get(1) == j && (l.contains(end))){
+                    g.setColor(Color.CYAN);
+                }
                 else if(k.contains(Arrays.asList(i,j))){
                     g.setColor(Color.RED);
-                }
-                else if(end.get(0) == i && end.get(1) == j){
-                    g.setColor(Color.BLUE);
                 }
                 else if(l.contains(Arrays.asList(i,j))){
                     g.setColor(Color.GREEN);
                 }
 
-
                 else{
                     g.setColor(Color.WHITE);
                 }
-                g.fillRect(i * 20, j * 20 + 50, 19, 19);
+                g.fillRect(i * 16, j * 14, 15, 13);
                 //this.repaint();
             }
         }

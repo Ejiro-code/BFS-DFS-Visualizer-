@@ -18,15 +18,17 @@ public class DFSGUI extends JPanel {
     List<List<Integer>> k = new ArrayList<>();
 
     public DFSGUI(int [][] matrix, List<Integer> start, List<Integer> end){
-
+        this.setBounds(0,50,810,720);
         this.matrix = matrix;
         this.start = start;
         this.end = end;
-        visited = new boolean[30][30];
+        visited = new boolean[50][50];
         l =  new Stack<>();
         maybe = new Stack<>();
         l.push(start);
         maybe.push(start);
+
+
 
         dfs(matrix, l, k,end,maybe);
     }
@@ -57,7 +59,7 @@ public class DFSGUI extends JPanel {
                 arr[node.get(0)][node.get(1)] = 1;
                 visited[node.get(0)][node.get(1)] = true;
                 try {
-                    Thread.sleep(100);
+                    Thread.sleep(5);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
@@ -75,8 +77,8 @@ public class DFSGUI extends JPanel {
                 return null;
             }
         };
-            Worker.execute();
-        }
+        Worker.execute();
+    }
 
 
     public List<List<Integer>> getNeighbors(int[][] arr, int i, int j){
@@ -109,11 +111,11 @@ public class DFSGUI extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.setColor(Color.DARK_GRAY);
-        g.fillRect(0, 50, 400, 500);
+        g.fillRect(0, 0, 810, 720);
 
 
-        for (int i = 0; i < 20; i++) {
-            for (int j = 0; j < 20; j++) {
+        for (int i = 0; i < 50; i++) {
+            for (int j = 0; j < 50; j++) {
                 if(start.get(0) == i && start.get(1) == j){
                     g.setColor(Color.BLUE);
                 }
@@ -139,7 +141,7 @@ public class DFSGUI extends JPanel {
                 else{
                     g.setColor(Color.WHITE);
                 }
-                g.fillRect(i * 20, j * 20 + 50, 19, 19);
+                g.fillRect(i * 16, j * 14, 15, 13);
                 this.repaint();
             }
         }

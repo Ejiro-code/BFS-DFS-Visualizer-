@@ -1,10 +1,11 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 public class GUI extends JFrame {
-    public int [][] grid = new int[20][20];
+    public int [][] grid = new int[50][50];
     public int spacing = 5;
 
     public int cx = -100;
@@ -12,36 +13,69 @@ public class GUI extends JFrame {
     ArrayList<Integer> nums1;
     ArrayList<Integer> nums2;
     int clickCounter = 0;
+
+    JButton bfs = new JButton();
+    JButton dfs = new JButton();
     Board board;
     public GUI(){
-        this.setTitle("Grid");
-        this.setSize(415,500);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setVisible(true);
-        this.setResizable(false);
+        nums1 = new ArrayList<>();
+        nums1.add(25);
+        nums1.add(25);
 
+        nums2 = new ArrayList<>();
+        nums2.add(0);
+        nums2.add(49);
+
+
+        bfs.setBounds(0,10,150,30);
+        bfs.setText("BFS");
+        bfs.setFocusable(false);
+
+        dfs.setBounds(180,10,150,30);
+        dfs.setText("DFS");
+        dfs.setFocusable(false);
+
+        this.setTitle("Grid");
+        this.setSize(815,800);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setLayout(null);
+        this.setBackground(Color.BLACK);
+        this.getContentPane().setBackground(Color.BLACK);
+        this.add(bfs);
+        this.add(dfs);
+        this.setVisible(true);
+        //this.setResizable(false);
         board = new Board(cx,cy);
         this.add(board);
+
+        bfs.addActionListener(e ->{
+
+            this.remove(board);
+            BFSGUI test1 = new BFSGUI(grid, nums1, nums2);
+            this.add(test1);
+            //entered = true;
+            //SwingUtilities.updateComponentTreeUI(this);
+            //this.remove(bs);
+        });
+
+        dfs.addActionListener(e ->{
+
+            this.remove(board);
+            DFSGUI test = new DFSGUI(grid, nums1, nums2);
+            this.add(test);
+        });
 
         Click click1 = new Click();
         this.addMouseListener(click1);
 
-        nums1 = new ArrayList<>();
-        nums1.add(10);
-        nums1.add(19);
 
-        nums2 = new ArrayList<>();
-        nums2.add(1);
-        nums2.add(19);
 
 //        if(clickCounter == 2){
 //            DFSGUI test = new DFSGUI(grid, nums1, nums2);
 //            this.add(test);
 //        }
         //DFSGUI test = new DFSGUI(grid, nums1, nums2);
-        this.remove(board);
-        BFSGUI test1 = new BFSGUI(grid, nums1, nums2);
-        this.add(test1);
+
 
     }
 
